@@ -57,7 +57,7 @@ function Calendar({
         Navigation: ({ children }: { children: React.ReactNode }) => (
           <div className="flex items-center space-x-2">{children}</div>
         ),
-      } as CustomComponents}
+      } as Partial<CustomComponents>} // Usamos Partial para evitar definir todas las propiedades
       {...props}
     />
   );
