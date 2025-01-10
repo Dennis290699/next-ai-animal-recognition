@@ -6,7 +6,6 @@ import { Upload, Image as ImageIcon, ImagePlus } from "lucide-react";
 import { PredictionDisplay } from "@/components/prediction-display";
 import { ImageProcessor } from "@/lib/services/imageProcessor";
 import { ImageState } from "@/lib/types";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Memoizar las URLs de las imágenes de muestra
@@ -29,7 +28,7 @@ export function ImageUpload() {
     try {
       const imageProcessor = ImageProcessor.getInstance();
       
-      const img = new Image();
+      const img = new Image(); // Correctly create the Image object
       img.src = URL.createObjectURL(file);
       await new Promise(resolve => img.onload = resolve);
       
@@ -128,14 +127,7 @@ export function ImageUpload() {
               exit={{ opacity: 0, scale: 0.9 }}
               className="relative rounded-xl overflow-hidden bg-black/5 shadow-lg aspect-video"
             >
-              <Image
-                src={imageState.preview}
-                alt="Preview"
-                fill
-                className="object-contain"
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
+              <img src={imageState.preview} alt="Preview" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
             </motion.div>
           ) : (
             <motion.div
@@ -197,15 +189,7 @@ export function ImageUpload() {
                   });
               }}
             >
-              <Image
-                src={url}
-                alt={`Sample ${index + 1}`}
-                fill
-                className="object-cover"
-                priority={index === 0}
-                sizes="(max-width: 768px) 100vw, 33vw"
-                loading={index === 0 ? 'eager' : 'lazy'}
-              />
+              <img src={url} alt={`Sample ${index + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                 <ImageIcon className="w-6 h-6 text-white" />
                 <span className="text-white ml-2 font-medium">Try this image</span>
