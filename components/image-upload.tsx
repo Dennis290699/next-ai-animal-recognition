@@ -28,7 +28,7 @@ export function ImageUpload() {
     try {
       const imageProcessor = ImageProcessor.getInstance();
       
-      const img = new Image(); // Correctly create the Image object
+      const img = new Image(); 
       img.src = URL.createObjectURL(file);
       await new Promise(resolve => img.onload = resolve);
       
@@ -76,6 +76,15 @@ export function ImageUpload() {
     multiple: false
   });
 
+  const dropzoneProps = useMemo(() => ({
+    ...getRootProps(),
+    style: {
+      ...getRootProps().style,
+      border: isDragActive ? '2px dashed #007bff' : '2px dashed #ced4da',
+      backgroundColor: isDragActive ? '#f8f9fa26' : 'transparent',
+    },
+  }), [getRootProps, isDragActive]);
+
   // Memoizar componentes que no necesitan actualizarse frecuentemente
   const dropzoneContent = useMemo(() => (
     <div className="text-center space-y-6">
@@ -103,21 +112,18 @@ export function ImageUpload() {
       className="space-y-12"
     >
       <div className="grid md:grid-cols-2 gap-8">
-        <motion.div
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          {...getRootProps()}
+        <div
+          {...dropzoneProps}
           className={`
-            border-2 border-dashed rounded-xl p-12 transition-all duration-300
+            rounded-xl p-12 transition-all duration-300
             backdrop-blur-sm bg-white/5
-            ${isDragActive ? 'border-primary bg-primary/5' : 'border-border'}
             hover:border-primary hover:bg-primary/5 cursor-pointer
             shadow-lg hover:shadow-xl
           `}
         >
           <input {...getInputProps()} />
           {dropzoneContent}
-        </motion.div>
+        </div>
 
         <AnimatePresence mode="wait">
           {imageState.preview ? (
