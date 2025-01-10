@@ -23,38 +23,42 @@ export function ImageUpload() {
     isProcessing: false
   });
 
-  const processImage = useCallback(async (file: File) => {
-    setImageState(prev => ({ ...prev, isProcessing: true, error: undefined }));
-    
-    try {
-      const imageProcessor = ImageProcessor.getInstance();
-      
-      const img = new Image();
-      img.src = URL.createObjectURL(file);
-      await new Promise(resolve => img.onload = resolve);
-      
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext('2d')!;
-      ctx.drawImage(img, 0, 0);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      
-      const prediction = await imageProcessor.predict(imageData);
-      
-      setImageState(prev => ({
-        ...prev,
-        prediction,
-        isProcessing: false
-      }));
-    } catch (error) {
-      setImageState(prev => ({
-        ...prev,
-        error: "Failed to process image",
-        isProcessing: false
-      }));
+const processImage = useCallback(async (file: File) => {
+  setImageState(prev => ({ ...prev, isProcessing: true, error: undefined }));
+
+  try {
+    if (typeof window === "undefined") {
+      throw new Error("Image processing is not supported in this environment.");
     }
-  }, []);
+
+    const imageProcessor = ImageProcessor.getInstance();
+
+    const img = new window.Image(); // Uso explícito de 'window.Image'
+    img.src = URL.createObjectURL(file);
+    await new Promise(resolve => (img.onload = resolve));
+
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext("2d")!;
+    ctx.drawImage(img, 0, 0);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    const prediction = await imageProcessor.predict(imageData);
+
+    setImageState(prev => ({
+      ...prev,
+      prediction,
+      isProcessing: false,
+    }));
+  } catch (error) {
+    setImageState(prev => ({
+      ...prev,
+      error: "Failed to process image",
+      isProcessing: false,
+    }));
+  }
+}, []);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
