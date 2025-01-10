@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { DayPicker } from 'react-day-picker';
+import { DayPicker, type CustomComponents, type DayPickerProps } from 'react-day-picker';
 
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
@@ -54,10 +54,10 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Navigation: ({ children }) => (
+        Navigation: ({ children }: { children: React.ReactNode }) => (
           <div className="flex items-center space-x-2">{children}</div>
         ),
-      } as CustomComponents) // Explicitly type the components prop
+      } as CustomComponents}
       {...props}
     />
   );
