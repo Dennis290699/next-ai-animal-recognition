@@ -68,55 +68,55 @@ export class ImageProcessor {
         console.log('Modelo no cargado, intentando cargar...');
         await this.loadModel();
       }
-
+  
       console.log('Iniciando preprocesamiento de imagen');
       console.log('Dimensiones de imagen original:', imageData.width, 'x', imageData.height);
-
+  
       const tensor = tf.tidy(() => {
         let pixels = tf.browser.fromPixels(imageData);
-        console.log('Tensor inicial:', pixels.shape); // Verifica las dimensiones de la imagen original
-
-        // Redimensionar la imagen a 224x224
+        console.log('Tensor inicial:', pixels.shape);
+  
         pixels = tf.image.resizeBilinear(pixels, [224, 224]);
-        console.log('Tensor redimensionado:', pixels.shape); // Verifica las dimensiones después del redimensionado
-
-        // Normaliza los valores entre 0 y 1 y asegura que esté en formato float32
+        console.log('Tensor redimensionado:', pixels.shape);
+  
         const normalized = pixels.toFloat().div(255.0);
-        console.log('Tensor normalizado:', normalized.shape); // Verifica las dimensiones después de la normalización
-
-        // Asegúrate de agregar la dimensión del batch correctamente
-        const batched = normalized.expandDims(0); // Añadir la dimensión de batch (1, 224, 224, 3)
-        console.log('Tensor final (con batch):', batched.shape); // Esto debe ser [1, 224, 224, 3]
-
+        console.log('Tensor normalizado:', normalized.shape);
+  
+        const batched = normalized.expandDims(0);
+        console.log('Tensor final (con batch):', batched.shape);
+  
         return batched;
       });
-
+  
       console.log('Realizando predicción...');
       const predictions = await this.model!.predict(tensor) as tf.Tensor;
       const scores = await predictions.data();
       console.log('Scores obtenidos:', Array.from(scores));
-
-      // Obtener los candidatos ordenados por confianza
+  
       const candidates = Array.from(scores).map((score, index) => ({
         animal: this.labels[index],
         confidence: score
       })).sort((a, b) => b.confidence - a.confidence);
-
-      // Obtener la predicción con mayor confianza
+  
       const topPrediction = candidates[0];
-
-      // Liberar memoria
+  
       tensor.dispose();
       predictions.dispose();
-
+  
       return {
         animal: topPrediction.animal,
         confidence: topPrediction.confidence,
         candidates
       };
-    } catch (error) {
-      console.error('Error detallado en la predicción:', error);
-      throw new Error(`Error al procesar la imagen: ${error.message}`);
+    } catch (error: unknown) {
+      // Type Guard para asegurar que 'error' es de tipo 'Error'
+      if (error instanceof Error) {
+        console.error('Error detallado en la predicción:', error);
+        throw new Error(`Error al procesar la imagen: ${error.message}`);
+      } else {
+        console.error('Error desconocido en la predicción:', error);
+        throw new Error('Error desconocido al procesar la imagen');
+      }
     }
   }
-}
+}  
