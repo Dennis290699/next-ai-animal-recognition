@@ -27,16 +27,16 @@ export function ImageUpload() {
   const processImage = useCallback(async (file: File) => {
     setImageState(prev => ({ ...prev, isProcessing: true, error: undefined, logs: [] }));
     const logs: string[] = [];
-  
+
     try {
       const imageProcessor = ImageProcessor.getInstance();
       logs.push("Initializing image processor...");
       await imageProcessor.loadModel();
       logs.push("Model loaded successfully");
-  
+
       const img = document.createElement('img');
       img.src = URL.createObjectURL(file);
-  
+
       img.onload = async () => {
         logs.push(`Processing image of size: ${img.width}x${img.height}`);
         const canvas = document.createElement('canvas');
@@ -46,10 +46,10 @@ export function ImageUpload() {
         ctx.drawImage(img, 0, 0);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         logs.push("Image prepared for analysis");
-  
+
         const prediction = await imageProcessor.predict(imageData);
         logs.push(`Analysis complete - Detected: ${prediction.animal} (${(prediction.confidence * 100).toFixed(1)}% confidence)`);
-  
+
         setImageState(prev => ({
           ...prev,
           prediction,
@@ -94,7 +94,7 @@ export function ImageUpload() {
   const dropzoneContent = useMemo(() => (
     <div className="text-center space-y-6">
       <motion.div
-        animate={{ 
+        animate={{
           y: isDragActive ? -10 : 0,
           scale: isDragActive ? 1.1 : 1
         }}
@@ -110,7 +110,7 @@ export function ImageUpload() {
   ), [isDragActive]);
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
@@ -120,18 +120,19 @@ export function ImageUpload() {
         <motion.div
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          {...getRootProps()}
+          {...getRootProps({ refKey: "ref" })} // Ensures the ref doesn't conflict
           className={`
-            border-2 border-dashed rounded-xl p-12 transition-all duration-300
-            backdrop-blur-sm bg-white/5
-            ${isDragActive ? 'border-primary bg-primary/5' : 'border-border'}
-            hover:border-primary hover:bg-primary/5 cursor-pointer
-            shadow-lg hover:shadow-xl
-          `}
+    border-2 border-dashed rounded-xl p-12 transition-all duration-300
+    backdrop-blur-sm bg-white/5
+    ${isDragActive ? "border-primary bg-primary/5" : "border-border"}
+    hover:border-primary hover:bg-primary/5 cursor-pointer
+    shadow-lg hover:shadow-xl
+  `}
         >
           <input {...getInputProps()} />
           {dropzoneContent}
         </motion.div>
+
 
         <AnimatePresence mode="wait">
           {imageState.preview ? (
@@ -181,7 +182,7 @@ export function ImageUpload() {
       )}
 
       <div>
-        <motion.h3 
+        <motion.h3
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
