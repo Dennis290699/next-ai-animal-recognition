@@ -1,6 +1,7 @@
 "use client";
 
 import * as tf from '@tensorflow/tfjs';
+import { PredictionResult } from '@/lib/types';
 
 export class ImageProcessor {
   private static instance: ImageProcessor;
