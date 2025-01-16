@@ -3,11 +3,11 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from "@/components/theme-provider";
 import { NavItems } from "@/components/nav-items";
+import Script from 'next/script';
 
-// Optimizar la carga de la fuente
 const inter = Inter({ 
   subsets: ['latin'],
-  display: 'swap', // Asegura que el texto sea visible mientras se carga la fuente
+  display: 'swap',
   preload: true
 });
 
@@ -24,6 +24,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest" strategy="beforeInteractive" />
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"

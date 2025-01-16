@@ -1,1 +1,0 @@
-# next-ai-animal-recognition

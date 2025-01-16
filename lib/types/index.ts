@@ -1,6 +1,12 @@
+export interface Candidate {
+  animal: string;
+  confidence: number;
+}
+
 export interface PredictionResult {
   animal: string;
   confidence: number;
+  candidates: Candidate[];
 }
 
 export interface ImageState {
@@ -9,4 +15,5 @@ export interface ImageState {
   prediction?: PredictionResult;
   isProcessing: boolean;
   error?: string;
+  logs?: string[];
 }
