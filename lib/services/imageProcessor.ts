@@ -34,27 +34,28 @@ export class ImageProcessor {
     try {
       this.isModelLoading = true;
       console.log('Iniciando carga del modelo...');
-      
+
       await tf.ready();
       console.log('TensorFlow.js está listo, backend:', tf.getBackend());
-      
+
       this.model = await tf.loadLayersModel('/Model/model.json', {
         onProgress: (fraction) => {
           console.log(`Progreso de carga del modelo: ${(fraction * 100).toFixed(1)}%`);
         }
       });
-      
+
       console.log('Modelo cargado exitosamente');
       this.model.summary();
-      
+
       const inputShape = this.model.inputs[0].shape;
       const outputShape = this.model.outputs[0].shape;
       console.log('Forma de entrada del modelo:', inputShape);
       console.log('Forma de salida del modelo:', outputShape);
-      
+
     } catch (error) {
       console.error('Error detallado al cargar el modelo:', error);
-      throw new Error(`No se pudo cargar el modelo: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : 'Error desconocido';
+      throw new Error(`No se pudo cargar el modelo: ${errorMessage}`);
     } finally {
       this.isModelLoading = false;
     }
