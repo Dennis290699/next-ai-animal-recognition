@@ -2,6 +2,8 @@
 
 import dynamic from 'next/dynamic';
 import { motion } from "framer-motion";
+import { SupportedAnimalsModal } from '@/components/SupportedAnimalsModal';
+import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 
 // Cargar el componente ImageUpload de forma dinámica
 const ImageUpload = dynamic(
@@ -21,22 +23,26 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       <div className="container mx-auto px-4 py-20 max-w-6xl">
-        <motion.div 
+        <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12 space-y-4"
         >
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
-            AI Animal Recognition
+            Animalia AI
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Experience the power of AI in identifying animals. Upload your own image or try our samples 
+            Experience the power of AI in identifying animals. Upload your own image or try our samples
             for instant recognition powered by advanced machine learning.
           </p>
+          <div className="flex justify-center pt-4">
+            <SupportedAnimalsModal />
+          </div>
         </motion.div>
         <ImageUpload />
       </div>
+      <ScrollToTopButton />
     </main>
   );
 }

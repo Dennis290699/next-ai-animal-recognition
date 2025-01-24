@@ -9,12 +9,15 @@ import { ImageState } from "@/lib/types";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Memoizar las URLs de las imágenes de muestra
+// Usar imágenes locales desde el directorio public
 const sampleImages = [
-  "https://images.unsplash.com/photo-1474314170901-f351b68f544f", // Cat
-  "https://images.unsplash.com/photo-1517849845537-4d257902454a", // Dog
-  "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f"  // Tiger
-].map(url => `${url}?auto=format&fit=crop&w=800&q=80`);
+  "/Assets/samples/cat.png",
+  "/Assets/samples/chinchilla.jpeg",
+  "/Assets/samples/lizard.png",
+  "/Assets/samples/panda.jpg",
+  "/Assets/samples/dog.jpg",
+  "/Assets/samples/cow.jpg",
+];
 
 export function ImageUpload() {
   const [imageState, setImageState] = useState<ImageState>({
@@ -27,16 +30,16 @@ export function ImageUpload() {
   const processImage = useCallback(async (file: File) => {
     setImageState(prev => ({ ...prev, isProcessing: true, error: undefined, logs: [] }));
     const logs: string[] = [];
-  
+
     try {
       const imageProcessor = ImageProcessor.getInstance();
       logs.push("Initializing image processor...");
       await imageProcessor.loadModel();
       logs.push("Model loaded successfully");
-  
+
       const img = document.createElement('img');
       img.src = URL.createObjectURL(file);
-  
+
       img.onload = async () => {
         logs.push(`Processing image of size: ${img.width}x${img.height}`);
         const canvas = document.createElement('canvas');
@@ -46,10 +49,10 @@ export function ImageUpload() {
         ctx.drawImage(img, 0, 0);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         logs.push("Image prepared for analysis");
-  
+
         const prediction = await imageProcessor.predict(imageData);
         logs.push(`Analysis complete - Detected: ${prediction.animal} (${(prediction.confidence * 100).toFixed(1)}% confidence)`);
-  
+
         setImageState(prev => ({
           ...prev,
           prediction,
@@ -94,7 +97,7 @@ export function ImageUpload() {
   const dropzoneContent = useMemo(() => (
     <div className="text-center space-y-6">
       <motion.div
-        animate={{ 
+        animate={{
           y: isDragActive ? -10 : 0,
           scale: isDragActive ? 1.1 : 1
         }}
@@ -109,8 +112,25 @@ export function ImageUpload() {
     </div>
   ), [isDragActive]);
 
+  const handleSampleImageClick = async (imagePath: string) => {
+    try {
+      const response = await fetch(imagePath);
+      const blob = await response.blob();
+      const file = new File([blob], imagePath.split('/').pop() || 'sample.jpg', { type: 'image/jpeg' });
+      setImageState({
+        file,
+        preview: imagePath,
+        isProcessing: false,
+        logs: []
+      });
+      processImage(file);
+    } catch (error) {
+      console.error('Error loading sample image:', error);
+    }
+  };
+
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
@@ -120,11 +140,11 @@ export function ImageUpload() {
         <motion.div
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          {...getRootProps()}
+          {...getRootProps({ refKey: "ref" })}
           className={`
             border-2 border-dashed rounded-xl p-12 transition-all duration-300
             backdrop-blur-sm bg-white/5
-            ${isDragActive ? 'border-primary bg-primary/5' : 'border-border'}
+            ${isDragActive ? "border-primary bg-primary/5" : "border-border"}
             hover:border-primary hover:bg-primary/5 cursor-pointer
             shadow-lg hover:shadow-xl
           `}
@@ -181,7 +201,7 @@ export function ImageUpload() {
       )}
 
       <div>
-        <motion.h3 
+        <motion.h3
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
@@ -189,7 +209,7 @@ export function ImageUpload() {
           Try with Sample Images
         </motion.h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {sampleImages.map((url, index) => (
+          {sampleImages.map((imagePath, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -197,23 +217,10 @@ export function ImageUpload() {
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.03 }}
               className="relative aspect-video rounded-xl overflow-hidden cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300"
-              onClick={() => {
-                fetch(url)
-                  .then(res => res.blob())
-                  .then(blob => {
-                    const file = new File([blob], "sample.jpg", { type: "image/jpeg" });
-                    setImageState({
-                      file,
-                      preview: url,
-                      isProcessing: false,
-                      logs: []
-                    });
-                    processImage(file);
-                  });
-              }}
+              onClick={() => handleSampleImageClick(imagePath)}
             >
               <Image
-                src={url}
+                src={imagePath}
                 alt={`Sample ${index + 1}`}
                 fill
                 className="object-cover"

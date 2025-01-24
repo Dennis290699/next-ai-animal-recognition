@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from "@/components/theme-provider";
 import { NavItems } from "@/components/nav-items";
+import { Footer } from "@/components/footer";
 import Script from 'next/script';
 
 const inter = Inter({ 
@@ -12,9 +13,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'AI Animal Recognition',
+  title: 'Animalia AI',
   description: 'Upload images to identify animals using AI',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1'
 };
 
 export default function RootLayout({
@@ -36,6 +37,7 @@ export default function RootLayout({
         >
           <NavItems />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

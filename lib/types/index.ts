@@ -1,3 +1,14 @@
+import { LucideIcon } from "lucide-react";
+
+export type AnimalCategory = "domestic" | "wild" | "birds" | "marine" | "reptiles" | "insects";
+
+export interface Animal {
+  name: string;
+  icon: LucideIcon;
+  description: string;
+  category: AnimalCategory;
+}
+
 export interface Candidate {
   animal: string;
   confidence: number;

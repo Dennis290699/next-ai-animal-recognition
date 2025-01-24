@@ -82,7 +82,7 @@ export function PredictionDisplay({ prediction, isProcessing, error, logs = [] }
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground">Confidence:</span>
                     <span className="font-medium text-lg text-primary">
-                      {(prediction.confidence * 100).toFixed(1)}%
+                      {(Math.min(prediction.confidence * 100, 98.7)).toFixed(1)}%
                     </span>
                   </div>
                   <motion.div
@@ -94,7 +94,7 @@ export function PredictionDisplay({ prediction, isProcessing, error, logs = [] }
                     <motion.div
                       className="h-full bg-primary rounded-full"
                       initial={{ width: 0 }}
-                      animate={{ width: `${prediction.confidence * 100}%` }}
+                      animate={{ width: `${Math.min(prediction.confidence * 100, 98.7)}%` }}
                       transition={{ duration: 0.8, ease: "easeOut" }}
                     />
                   </motion.div>
@@ -102,8 +102,8 @@ export function PredictionDisplay({ prediction, isProcessing, error, logs = [] }
 
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="w-full mt-4"
                       onClick={(e) => e.stopPropagation()}
                     >
@@ -127,29 +127,29 @@ export function PredictionDisplay({ prediction, isProcessing, error, logs = [] }
                           Top Candidates
                         </h4>
                         <div className="space-y-3">
-                          {prediction.candidates.slice(0, 3).map((candidate, index) => (
-                            <motion.div
-                              key={candidate.animal}
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: index * 0.1 }}
-                              className="flex items-center gap-3"
-                            >
-                              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
-                                index === 0 ? 'bg-yellow-500/20 text-yellow-500' :
-                                index === 1 ? 'bg-gray-500/20 text-gray-500' :
-                                'bg-amber-800/20 text-amber-800'
-                              }`}>
-                                #{index + 1}
-                              </div>
-                              <div className="flex-1 flex items-center justify-between">
-                                <span className="font-medium">{candidate.animal}</span>
-                                <span className="text-muted-foreground">
-                                  {(candidate.confidence * 100).toFixed(1)}%
-                                </span>
-                              </div>
-                            </motion.div>
-                          ))}
+                          {prediction.candidates.slice(0, 3).map((candidate, index) => {
+                            const adjustedConfidence = Math.min(candidate.confidence * 100, 98.7).toFixed(1);
+                            return (
+                              <motion.div
+                                key={candidate.animal}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: index * 0.1 }}
+                                className="flex items-center gap-3"
+                              >
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${index === 0 ? 'bg-yellow-500/20 text-yellow-500' :
+                                    index === 1 ? 'bg-gray-500/20 text-gray-500' :
+                                      'bg-amber-800/20 text-amber-800'
+                                  }`}>
+                                  #{index + 1}
+                                </div>
+                                <div className="flex-1 flex items-center justify-between">
+                                  <span className="font-medium">{candidate.animal}</span>
+                                  <span className="text-muted-foreground">{adjustedConfidence}%</span>
+                                </div>
+                              </motion.div>
+                            );
+                          })}
                         </div>
                       </div>
 
@@ -161,7 +161,7 @@ export function PredictionDisplay({ prediction, isProcessing, error, logs = [] }
                           <Terminal className="w-5 h-5" />
                           Processing Logs
                         </h4>
-                        <ScrollArea className="h-[300px] w-full rounded-md border">
+                        <ScrollArea className="h-[250px] w-full rounded-md border">
                           <div className="p-4 space-y-4">
                             {logs.map((log, index) => (
                               <motion.div
