@@ -6,7 +6,7 @@ import { PredictionResult } from '@/lib/types';
 export class ImageProcessor {
   private static instance: ImageProcessor;
   private model: tf.LayersModel | null = null;
-  private labels: string[] = ['cat', 'chinchilla', 'cow', 'dog', 'lizard', 'panda'];
+  private labels: string[] = ['gato', 'chinchilla', 'vaca', 'perro', 'lagarto', 'panda'];
   private isModelLoading: boolean = false;
 
   private constructor() {

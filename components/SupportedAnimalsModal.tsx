@@ -35,14 +35,14 @@ export function SupportedAnimalsModal() {
       <DialogTrigger asChild>
         <Button variant="outline" className="gap-2">
           <Info className="h-4 w-4" />
-          View Supported Animals
+          Mostrar clases del modelo entrenado
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[760px] max-h-[90vh] flex flex-col">
         <DialogHeader>
-          <DialogTitle>Supported Animals</DialogTitle>
+          <DialogTitle>Clases del modelo entrenado</DialogTitle>
           <DialogDescription>
-            Our AI model can recognize these animals. For best results, use clear, well-lit images.
+          Nuestro modelo de IA puede reconocer estos animales. Para obtener mejores resultados, utilice imágenes claras y bien iluminadas.
           </DialogDescription>
         </DialogHeader>
 

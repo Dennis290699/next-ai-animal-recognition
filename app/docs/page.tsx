@@ -8,7 +8,7 @@ import Link from 'next/link'
 export default function DocsPage() {
   const docSections = [
     { icon: Book, title: 'Guía de Inicio', href: '/docs/getting-started', description: 'Aprende cómo comenzar con nuestros modelos de IA.' },
-    { icon: Code, title: 'Code Reference', href: '/docs/code-reference', description: 'Documentación detallada de nuestro código de entrenamiento IA.' },
+    { icon: Code, title: 'Referencia de código', href: '/docs/code-reference', description: 'Documentación detallada de nuestro código de entrenamiento IA.' },
     { icon: Database, title: 'Modelos y Datasets', href: '/docs/models-and-datasets', description: 'Información sobre nuestros modelos de IA y conjuntos de datos.' },
     { icon: Folder, title: 'Recursos', href: '/docs/resources', description: 'Recursos adicionales y herramientas para trabajar con nuestros modelos de IA.' },
   ]

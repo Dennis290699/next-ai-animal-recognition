@@ -28,8 +28,8 @@ export function SupportedAnimalsList({
   if (filteredAnimals.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center p-8 text-center text-muted-foreground">
-        <p>No animals found matching your criteria.</p>
-        <p className="text-sm">Try adjusting your search or category filter.</p>
+        <p>No se encontraron animales que coincidan con sus criterios.</p>
+        <p className="text-sm">Intente ajustar su filtro de búsqueda o categoría.</p>
       </div>
     );
   }

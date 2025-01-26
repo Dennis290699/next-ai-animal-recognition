@@ -6,7 +6,7 @@ import { NavItems } from "@/components/nav-items";
 import { Footer } from "@/components/footer";
 import Script from 'next/script';
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   preload: true

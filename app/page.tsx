@@ -33,8 +33,8 @@ export default function Home() {
             Animalia AI
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Experience the power of AI in identifying animals. Upload your own image or try our samples
-            for instant recognition powered by advanced machine learning.
+            Experimenta el poder de la inteligencia artificial en la identificación de animales. Sube tu propia imagen o prueba nuestras muestras
+            para un reconocimiento instantáneo, impulsado por aprendizaje automático avanzado.
           </p>
           <div className="flex justify-center pt-4">
             <SupportedAnimalsModal />

@@ -53,7 +53,7 @@ export function PredictionDisplay({ prediction, isProcessing, error, logs = [] }
           <Card className="p-6 shadow-lg bg-primary/5 border-primary/20">
             <div className="flex items-center space-x-3 text-primary">
               <Loader2 className="w-6 h-6 animate-spin" />
-              <p className="font-medium">Analyzing your image...</p>
+              <p className="font-medium">Analizando su imagen...</p>
             </div>
           </Card>
         </motion.div>
@@ -71,16 +71,16 @@ export function PredictionDisplay({ prediction, isProcessing, error, logs = [] }
             <div className="space-y-6">
               <div className="flex items-center space-x-3">
                 <Check className="w-6 h-6 text-green-500" />
-                <h3 className="text-2xl font-semibold text-primary">Analysis Results</h3>
+                <h3 className="text-2xl font-semibold text-primary">Resultados del analisis</h3>
               </div>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Detected Animal:</span>
+                  <span className="text-muted-foreground">Animal Detectado:</span>
                   <span className="font-medium text-xl text-primary">{prediction.animal}</span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Confidence:</span>
+                    <span className="text-muted-foreground">Nivel de confiancia:</span>
                     <span className="font-medium text-lg text-primary">
                       {(Math.min(prediction.confidence * 100, 98.7)).toFixed(1)}%
                     </span>
@@ -108,14 +108,14 @@ export function PredictionDisplay({ prediction, isProcessing, error, logs = [] }
                       onClick={(e) => e.stopPropagation()}
                     >
                       <Terminal className="w-4 h-4 mr-2" />
-                      Show Analysis Details
+                      Mostrar detalles del análisis
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[600px] max-h-[80vh]">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-2">
                         <Terminal className="w-5 h-5" />
-                        Analysis Details
+                        Detalles del análisis
                       </DialogTitle>
                     </DialogHeader>
 
@@ -124,7 +124,7 @@ export function PredictionDisplay({ prediction, isProcessing, error, logs = [] }
                       <div className="space-y-4">
                         <h4 className="font-semibold flex items-center gap-2">
                           <Trophy className="w-5 h-5 text-yellow-500" />
-                          Top Candidates
+                          Mejores 3 candidatos
                         </h4>
                         <div className="space-y-3">
                           {prediction.candidates.slice(0, 3).map((candidate, index) => {
@@ -159,7 +159,7 @@ export function PredictionDisplay({ prediction, isProcessing, error, logs = [] }
                       <div className="space-y-4">
                         <h4 className="font-semibold flex items-center gap-2">
                           <Terminal className="w-5 h-5" />
-                          Processing Logs
+                          Registros de procesamiento
                         </h4>
                         <ScrollArea className="h-[250px] w-full rounded-md border">
                           <div className="p-4 space-y-4">
