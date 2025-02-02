@@ -136,7 +136,8 @@ export default function ResourcesPage() {
             <p className="mb-4">Descarga el modelo entrenado en formato .h5:</p>
             <a
               href="https://www.mediafire.com/file/w7n2qp2dhw1f889/final_model.h5/file"
-              download
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-blue-600 hover:underline"
             >
               Descargar modelo .h5
