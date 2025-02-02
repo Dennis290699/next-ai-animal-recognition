@@ -119,7 +119,7 @@ export default function ResourcesPage() {
             </h3>
             <p className="mb-4">Descarga el modelo entrenado en formato .keras:</p>
             <a
-              href="https://www.mediafire.com/file/f39zbonlh36s1ur/final_model.keras/file"
+              href="https://www.mediafire.com/file/h7e2gb3sre193tz/final_model.keras/file"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline"
@@ -135,18 +135,13 @@ export default function ResourcesPage() {
             </h3>
             <p className="mb-4">Descarga el modelo entrenado en formato .h5:</p>
             <a
-              href="/ruta/a/tu-modelo.h5"
+              href="https://www.mediafire.com/file/w7n2qp2dhw1f889/final_model.h5/file"
               download
               className="text-blue-600 hover:underline"
             >
               Descargar modelo .h5
             </a>
           </section>
-
-          <Link href="/docs" className="flex items-center text-primary mb-4 ">
-            <ArrowLeft className="mr-2" />
-            Volver a Documentación
-          </Link>
 
         </motion.div>
       </div>

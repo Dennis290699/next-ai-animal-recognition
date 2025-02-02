@@ -611,9 +611,9 @@ print(f"Registros de la matriz de confusión y métricas guardados en: {log_dir_
 
 
 === Métricas Generales ===
-Precisión por clase: {'cat': 0.9859154929577465, 'chinchilla': 0.7818181818181819, 'cow': 0.8775510204081632, 'dog': 0.9662921348314607, 'lizard': 1.0, 'panda': 0.9545454545454546}
-Recall por clase: {'cat': 0.8045977011494253, 'chinchilla': 1.0, 'cow': 1.0, 'dog': 0.9347826086956522, 'lizard': 1.0, 'panda': 0.9767441860465116}
-F1-score por clase: {'cat': 0.8860759493670887, 'chinchilla': 0.8775510204081634, 'cow': 0.9347826086956522, 'dog': 0.9502762430939227, 'lizard': 1.0, 'panda': 0.9655172413793104}
+Precisión por clase: {'cat': 0.9879518072289156, 'chinchilla': 0.9767441860465116, 'cow': 0.9545454545454546, 'dog': 1.0, 'lizard': 0.9148936170212766, 'panda': 0.9347826086956522}
+Recall por clase: {'cat': 0.9425287356321839, 'chinchilla': 0.9767441860465116, 'cow': 0.9767441860465116, 'dog': 0.9565217391304348, 'lizard': 1.0, 'panda': 1.0}
+F1-score por clase: {'cat': 0.9647058823529412, 'chinchilla': 0.9767441860465116, 'cow': 0.9655172413793104, 'dog': 0.9777777777777777, 'lizard': 0.9555555555555556, 'panda': 0.9662921348314606}
 
 Registros de la matriz de confusión y métricas guardados en: /kaggle/working/tensorboard_logs/confusion_matrix_logs
 "
