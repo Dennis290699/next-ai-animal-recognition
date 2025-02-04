@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button"
 import { useActiveSection } from "@/hooks/useActiveSection"
 
 const sections = [
+  { id: 'document-final', title: 'Recurso escrito', icon: FileText },
+  { id: 'document-expo', title: 'Recurso de exposición', icon: FileText },
   { id: 'notebook-kaggle', title: 'Notebook de Kaggle', icon: FileText },
   { id: 'notebook-colab', title: 'Notebook de Colab', icon: FileText },
   { id: 'model-keras', title: 'Modelo en formato .keras', icon: Download },
@@ -79,6 +81,38 @@ export default function ResourcesPage() {
           <p className="mb-8 text-lg">
             Aquí encontrarás los recursos relacionados con el entrenamiento y uso de nuestros modelos de IA.
           </p>
+
+          <section ref={(el) => { sectionRefs.current['document-final'] = el; }} id="document-final" className="mb-12 scroll-mt-20">
+            <h3 className="text-2xl font-semibold mb-4 flex items-center">
+              <FileText className="mr-2" />
+              Recurso documental
+            </h3>
+            <p className="mb-4">Documento escrito sobre el proyecto:</p>
+            <a
+              href="/Archives/Documento_Final_G7.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              Documentacion
+            </a>
+          </section>
+
+          <section ref={(el) => { sectionRefs.current['document-expo'] = el; }} id="document-expo" className="mb-12 scroll-mt-20">
+            <h3 className="text-2xl font-semibold mb-4 flex items-center">
+              <FileText className="mr-2" />
+              Recurso de exposición
+            </h3>
+            <p className="mb-4">Material de exposición sobre el proyecto:</p>
+            <a
+              href="/Archives/Documento_Exposicion_G7.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              Material de exposición
+            </a>
+          </section>
 
           <section ref={(el) => { sectionRefs.current['notebook-kaggle'] = el; }} id="notebook-kaggle" className="mb-12 scroll-mt-20">
             <h3 className="text-2xl font-semibold mb-4 flex items-center">
